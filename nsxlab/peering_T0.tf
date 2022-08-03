@@ -55,3 +55,30 @@ resource "nsxt_policy_tier0_gateway_interface" "peering2" {
   subnets = ["192.168.160.1/24"] 
   mtu = 1500
 }
+
+#Define BGP Neighbors
+resource "nsxt_policy_bgp_neighbor" "Peer1" {
+    display_name = "Lab BGP Peering"
+    description = "Terraform provisioned BgpNeighborConfig"
+    bgp_path = nsxt_policy_tier0_gateway.Peering.bgp_config.0.path
+    allow_as_in = true
+    graceful_restart_mode = "HELPER_ONLY"
+    hold_down_time = 300
+    keep_alive_time = 100
+    neighbor_address = "192.168.150.254"
+    remote_as_num = "65000"
+    source_addresses = nsxt_policy_tier0_gateway_interface.Peering1.ip_addresses
+}
+
+resource "nsxt_policy_bgp_neighbor" "Peer2" {
+    display_name = "Lab BGP Peering"
+    description = "Terraform provisioned BgpNeighborConfig"
+    bgp_path = nsxt_policy_tier0_gateway.Peering.bgp_config.0.path
+    allow_as_in = true
+    graceful_restart_mode = "HELPER_ONLY"
+    hold_down_time = 300
+    keep_alive_time = 100
+    neighbor_address = "192.168.160.254"
+    remote_as_num = "65000"
+    source_addresses = nsxt_policy_tier0_gateway_interface.Peering2.ip_addresses
+}
