@@ -6,7 +6,7 @@ resource "nsxt_policy_vlan_segment" "peering1" {
 }
 
 resource "nsxt_policy_vlan_segment" "peering2" {
-  display_name = "peering1_interface_vlan_208"
+  display_name = "peering2_interface_vlan_209"
   transport_zone_path = data.nsxt_policy_transport_zone.TZ-VLAN.path
   vlan_ids = [ "209" ]
 }
