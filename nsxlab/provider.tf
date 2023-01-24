@@ -3,9 +3,11 @@ terraform {
     nsxt = {
       source = "vmware/nsxt"
     }
+    vsphere = {
+      source  = "hashicorp/vsphere"
+    }
   }
 }
-
 #NSXT Specific details, hostname, login credentials etc
 
 provider "nsxt" {
