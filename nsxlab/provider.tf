@@ -11,9 +11,9 @@ terraform {
 #NSXT Specific details, hostname, login credentials etc
 
 provider "nsxt" {
-  host                 = "192.168.1.17"
+  host                 = "192.168.1.13"
   username             = "admin"
-  password             = "VMware!nsxt@1"
+  password             = "NSxVMware!2345"
   allow_unverified_ssl = true
   max_retries          = 10
   retry_min_delay      = 500
