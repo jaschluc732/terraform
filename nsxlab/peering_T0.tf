@@ -17,7 +17,7 @@ resource "nsxt_policy_tier0_gateway" "Peering" {
   edge_cluster_path            = data.nsxt_policy_edge_cluster.CLUSTER1.path
 
   bgp_config {
-      local_as_name            = "65001"
+      local_as_num            = "65001"
       enabled                  = true
       inter_sr_ibgp            = true    
   }
