@@ -1,23 +1,23 @@
 #Define vlan attached segment
 resource "nsxt_policy_vlan_segment" "peering1" {
   display_name = "peering1_interface_vlan_208"
-  transport_zone_path = data.nsxt_policy_transport_zone.TZ-VLAN.path
+  transport_zone_path = data.nsxt_policy_transport_zone.tz-vlan.path
   vlan_ids = [ "208" ]
 }
 
 resource "nsxt_policy_vlan_segment" "peering2" {
   display_name = "peering2_interface_vlan_209"
-  transport_zone_path = data.nsxt_policy_transport_zone.TZ-VLAN.path
+  transport_zone_path = data.nsxt_policy_transport_zone.tz-vlan.path
   vlan_ids = [ "209" ]
 }
 
 #Define T0 Core Router, name, cluster relationship and BGP AS number
 resource "nsxt_policy_tier0_gateway" "Peering" {
   display_name                 = "Peering"
-  edge_cluster_path            = data.nsxt_policy_edge_cluster.CLUSTER1.path
+  edge_cluster_path            = data.nsxt_policy_edge_cluster.Prod-Cluster.path
 
   bgp_config {
-      local_as_num            = "65001"
+      local_as_num            = "65000"
       enabled                  = true
       inter_sr_ibgp            = true    
   }
@@ -26,10 +26,10 @@ resource "nsxt_policy_tier0_gateway" "Peering" {
 resource "nsxt_policy_gateway_redistribution_config" "advertised-routes" {
   gateway_path = nsxt_policy_tier0_gateway.Peering.path
   bgp_enabled  = true
-  ospf_enabled = true
+  ospf_enabled = false
   rule {
     name = "advertised-routes"
-    types = ["TIER0_STATIC", "TIER0_CONNECTED", "TIER1_CONNECTED"]
+    types = ["TIER0_CONNECTED", "TIER0_EVPN"]
   }
 }
 
